@@ -21,7 +21,9 @@ if not pdf_files:
 
 # 📑 選擇要檢視的 PDF
 file_names = [file["name"] for file in pdf_files]
-selected_file_name = st.selectbox("📁 選擇要檢視的合約：", file_names)
+with st.sidebar:
+    st.header("📁 合約列表")
+    selected_file_name = st.selectbox("請選擇合約：", file_names)
 
 # 取得選定檔案的 ID
 selected_file = next(file for file in pdf_files if file["name"] == selected_file_name)
