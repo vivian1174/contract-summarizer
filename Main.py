@@ -19,10 +19,10 @@ if not pdf_files:
     st.warning("❗ 找不到任何 PDF 檔案，請確認 Google Drive 資料夾中有檔案。")
 else:
     with st.sidebar:
-        selected_file = st.selectbox("📂 選擇檔案", pdf_files, format_func=lambda x: x['name'])
+        selected_file = st.selectbox("選擇檔案", pdf_files, format_func=lambda x: x['name'])
 
-    st.subheader(f"📎 合約：{selected_file['name']}")
-    st.markdown(f"[🔗 查看原始檔案（Google Drive）](https://drive.google.com/file/d/{selected_file['id']}/view)")
+    st.subheader(f"合約：{selected_file['name']}")
+    st.markdown(f"[查看原始檔案（Google Drive）](https://drive.google.com/file/d/{selected_file['id']}/view)")
 
     # 載入 PDF 檔案
     file_bytes = download_pdf(selected_file['id'])
@@ -37,8 +37,8 @@ else:
     st.divider()
 
     # 產生摘要按鈕
-    st.subheader("🧠 合約摘要")
-    if st.button("✨ 產生摘要"):
+    st.subheader("合約摘要")
+    if st.button("摘要"):
         with st.spinner("LLM 正在產生摘要..."):
             full_text = "\n".join(page.get_text() for page in pdf_doc)
             summary = summarize_text(full_text, groq_api_key)
