@@ -15,7 +15,7 @@ groq_api_key = st.secrets["GROQ_API_KEY"]
 pdf_files = list_pdfs_from_drive(folder_id)
 
 # 左側選單：選擇 PDF 檔案
-st.sidebar.title("📑 請選擇合約檔案")
+st.sidebar.title("請選擇合約檔案")
 if not pdf_files:
     st.sidebar.warning("找不到任何 PDF 檔案")
     st.stop()
