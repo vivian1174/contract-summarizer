@@ -1,5 +1,4 @@
 import requests
-import streamlit as st  # 用於顯示錯誤（開發階段）
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -17,7 +16,10 @@ def summarize_text(text, api_key):
         "messages": [
             {
                 "role": "system",
-                "content": "你是一位專業法律助理，請閱讀以下合約內容，並用條列式方式摘要重點，包含：合約目的、雙方義務、關鍵期限、金額、特殊條款。"
+                "content": (
+                    "你是一位專業法律助理，請閱讀以下合約內容，並用**繁體中文（台灣用法）**條列方式摘要重點。"
+                    "請依序整理以下項目：合約目的、雙方義務、關鍵期限、金額、特殊條款。請保持語氣專業、簡潔、務實。"
+                )
             },
             {
                 "role": "user",
@@ -29,28 +31,13 @@ def summarize_text(text, api_key):
 
     try:
         response = requests.post(GROQ_API_URL, headers=headers, json=payload)
-        response.raise_for_status()  # 若不是 2xx，會拋出 HTTPError
-
+        response.raise_for_status()
         result = response.json()
         return result["choices"][0]["message"]["content"].strip()
 
-    except requests.exceptions.HTTPError as http_err:
-        # 顯示詳細錯誤資訊（便於除錯）
-        st.error("❌ HTTP 錯誤")
-        st.error(f"狀態碼：{http_err.response.status_code}")
-        st.error(f"錯誤訊息：{http_err.response.text}")
+    except requests.exceptions.RequestException:
+        return "❌ 摘要失敗：無法連線至 Groq API，請稍後再試。"
 
-        print("🚨 HTTP Error:")
-        print(f"Status Code: {http_err.response.status_code}")
-        print(f"Response Text: {http_err.response.text}")
-        print(f"API Key Prefix: {api_key[:6]}... (已隱藏其餘部分)")
-        print(f"URL: {GROQ_API_URL}")
+    except Exception:
+        return "❌ 摘要失敗：發生未知錯誤，請聯絡管理員。"
 
-        return f"❌ 摘要失敗：{http_err.response.status_code} - {http_err.response.text}"
-
-    except Exception as e:
-        # 其他未知錯誤
-        st.error("❌ 發生其他錯誤")
-        st.error(str(e))
-        print("❌ Unknown Error:", repr(e))
-        return f"❌ 摘要失敗：{e}"
