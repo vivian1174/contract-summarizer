@@ -5,8 +5,8 @@ from PyPDF2 import PdfReader
 import io
 import base64
 
-st.set_page_config(page_title="📄 合約摘要系統", layout="wide")
-st.title("📄 合約摘要系統")
+st.set_page_config(page_title="合約摘要系統", layout="wide")
+st.title("合約摘要系統")
 
 # 讀取 secrets
 folder_id = st.secrets["GOOGLE_DRIVE_FOLDER_ID"]
