@@ -1,0 +1,12 @@
+[server]
+headless = true
+
+[theme]
+primaryColor = "#D2C1B6"
+backgroundColor = "#1B3C53"
+secondaryBackgroundColor = "#456882"
+textColor = "F9F3EF"
+font = "serif"
+baseRadius = "medium"
+buttonRadius ="medium"
+borderColor ="#D2C1B6"
