@@ -8,7 +8,7 @@ import base64
 st.set_page_config(page_title="📄 合約摘要系統", layout="wide")
 st.title("📄 合約摘要系統")
 
-# 🔐 讀取 secrets
+# 讀取 secrets
 folder_id = st.secrets["GOOGLE_DRIVE_FOLDER_ID"]
 groq_api_key = st.secrets["GROQ_API_KEY"]
 
@@ -22,7 +22,7 @@ if not pdf_files:
 # 📑 選擇要檢視的 PDF
 file_names = [file["name"] for file in pdf_files]
 with st.sidebar:
-    st.header("📁 合約列表")
+    st.header("合約列表")
     selected_file_name = st.selectbox("請選擇合約：", file_names)
 
 # 取得選定檔案的 ID
@@ -33,11 +33,11 @@ file_id = selected_file["id"]
 viewer_url = f"https://drive.google.com/file/d/{file_id}/preview"
 
 # 📄 顯示 PDF 原始檔案（可滾輪瀏覽）
-st.markdown("### 📄 合約原文")
+st.markdown("### 合約原文")
 st.components.v1.iframe(viewer_url, height=600, width=900)
 
 # 🧠 顯示產生摘要按鈕
-if st.button("🧠 產生摘要"):
+if st.button("產生摘要"):
     with st.spinner("AI 摘要生成中，請稍候..."):
         file_bytes = download_pdf(file_id)
         reader = PdfReader(io.BytesIO(file_bytes))
